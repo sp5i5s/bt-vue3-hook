@@ -1,20 +1,35 @@
 <template>
   <div>123</div>
+  <li v-for="item in list.list">{{ item.title }}</li>
 </template>
-<script lang="ts" setup>
+<script lang="ts">
 import { useCache } from "../../packages";
 import axios from "axios";
-import { reactive } from "vue";
+import { reactive, setup } from "vue";
 
-let fn = (): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    axios.get("http://localhost:8026/api/school/homeList").then((res) => {
-      resolve(res);
-    });
-  });
+export default {
+  setup() {
+    const fn = (): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        axios.get("http://localhost:8026/api/school/homeList").then((res) => {
+          resolve(res);
+        });
+      });
+    };
+
+    const list = reactive({ list: [] });
+
+    let dataBind = async () => {
+      let { result } = await useCache({ key: "a1", promise: fn });
+      console.log("result", result);
+      list.list = result.data.data.pageList;
+    };
+
+    dataBind();
+
+    return { list };
+    //
+    // console.log(list.list);
+  },
 };
-let key = "a1";
-let { result } = await useCache({ key, promise: fn });
-const list = reactive({ list: result.data.data.pageList });
-console.log(list.list);
 </script>
