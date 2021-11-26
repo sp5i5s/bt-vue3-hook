@@ -1,0 +1,1 @@
+export enum sysEnum { cachePrefix = '__bt_cache_' };

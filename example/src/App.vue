@@ -5,23 +5,28 @@
 <script lang="ts">
 import { useCache } from "../../packages";
 import axios from "axios";
-import { reactive, setup } from "vue";
+import { reactive } from "vue";
 
 export default {
   setup() {
-    const fn = (): Promise<any> => {
+    const fn = (params): Promise<any> => {
       return new Promise((resolve, reject) => {
-        axios.get("http://localhost:8026/api/school/homeList").then((res) => {
-          resolve(res);
-        });
+        axios
+          .post("http://localhost:8026/api/school/homeList", params)
+          .then((res) => {
+            resolve(res);
+          });
       });
     };
 
     const list = reactive({ list: [] });
 
     let dataBind = async () => {
-      let { result } = await useCache({ key: "a1", promiseFn: fn });
-      console.log("result", result);
+      let { result } = await useCache({
+        key: "homelist",
+        promiseFn: fn,
+      });
+      console.log("result > ", result);
       list.list = result.data.data.pageList;
     };
 

@@ -1,5 +1,5 @@
 // 获取变量类型
-export const __getVariableType = function ($var) {
+export const __getVariableType = function ($var: any) {
   return Object.prototype.toString.call($var);
 };
 
@@ -27,8 +27,9 @@ export const __getStringToObject = function ($var) {
 };
 
 // 统一处理Promise
-export const promiseHandle = (promise: Function): any => {
-  return promise()
+export const promiseHandle = (promise: Function, params: object): any => {
+  console.log('params', params)
+  return promise(params)
     .then((res) => {
       return Promise.resolve(res);
     })
@@ -36,12 +37,3 @@ export const promiseHandle = (promise: Function): any => {
       return Promise.reject(e);
     });
 };
-// export const promiseHandle = (promise: Promise<any>): any => {
-//   return promise
-//     .then((res) => {
-//       return Promise.resolve(res);
-//     })
-//     .catch((e) => {
-//       return Promise.reject(e);
-//     });
-// };
