@@ -2,10 +2,7 @@
   "name": "bt-vue3-hook",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "packages/index.ts",
   "author": "sp5i5s",
   "license": "ISC"
 }

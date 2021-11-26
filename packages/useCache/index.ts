@@ -2,7 +2,7 @@ import * as utils from "../common/utils";
 
 interface iCache {
   key: string;
-  promise: Function;
+  promiseFn: Function;
 }
 
 const session = window.sessionStorage;
@@ -11,8 +11,8 @@ export const useCache = async (options: iCache) => {
   console.log(options);
   let result = session.getItem(options.key);
   if (!session.getItem(options.key)) {
-    if (options.promise) {
-      result = await utils.promiseHandle(options.promise);
+    if (options.promiseFn) {
+      result = await utils.promiseHandle(options.promiseFn);
       // 如果是引用类型
       if (utils.__getVariableReferenceType(result)) {
         result = JSON.stringify(result);
