@@ -20,7 +20,7 @@ export default {
     const list = reactive({ list: [] });
 
     let dataBind = async () => {
-      let { result } = await useCache({ key: "a1", promise: fn });
+      let { result } = await useCache({ key: "a1", promiseFn: fn });
       console.log("result", result);
       list.list = result.data.data.pageList;
     };
@@ -28,8 +28,6 @@ export default {
     dataBind();
 
     return { list };
-    //
-    // console.log(list.list);
   },
 };
 </script>
